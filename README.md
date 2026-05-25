@@ -46,17 +46,17 @@ Aqui está o mapeamento de recursos que estão sendo construídos ou planejados 
 
 Antes de começar, você vai precisar ter instalado em sua máquina:
 
-- **Ambiente de Execução / Linguagem: Node.js (versão LTS recomendada)** ...
-- **Controle de Versão: Git** ...
-- **Gerenciador de Pacotes: NPM (já vem instalado junto com o Node.js)** ...
-  **Banco de Dados: PostgreSQL** ...
+- **Ambiente de Execução / Linguagem:** Node.js (versão LTS recomendada) ...
+- **Controle de Versão:** Git ...
+- **Gerenciador de Pacotes:** NPM (já vem instalado junto com o Node.js) ...
+  **Banco de Dados:** PostgreSQL ...
 
 ### 🚀 Passos para Instalação
 
 1. Clone o repositório oficial dentro da organização Juninhos:
 
    ```bash
-   git clone [(https://github.com/juninhos-comunidade/Suds-Tracker-.git)](https://github.com/juninhos-comunidade/Suds-Tracker-.git))
+   git clone [(https://github.com/juninhos-comunidade/Suds-Tracker-.git)](https://github.com/juninhos-comunidade/Suds-Tracker-.git)
    ```
 
 2. Acesse a pasta do projeto:
@@ -84,15 +84,19 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 
 5. Inicie o servidor de desenvolvimento:
 
-# Terminal 1: Iniciando o Frontend (Next.js) -> Rodará em http://localhost:3000
+Terminal 1: Iniciando o Frontend (Next.js) -> Rodará em http://localhost:3000
 
+```
 cd frontend
 npm run dev
+```
 
-# Terminal 2: Iniciando o Backend (Express) -> Rodará em http://localhost:5000
+Terminal 2: Iniciando o Backend (Express) -> Rodará em http://localhost:5000
 
+```
 cd backend
 npm run dev
+```
 
 ---
 
