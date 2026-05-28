@@ -1,15 +1,17 @@
+import usuariosService from "../services/usuariosService.js";
+
 async function cadastrarUsuario(req, res) {
   try {
     const { nome, email, senha, dataNascimento, registroProfissional, role } =
       req.body;
-    if ((!nome, !email, !senha, !registroProfissional)) {
+    if (!nome || !email || !senha) {
       return res
         .status(400)
-        .json({ error: 'Nome, Email e Senha são obrigatórios.' });
+        .json({ error: "Nome, Email e Senha são obrigatórios." });
     }
-    if (role === 'PROFISSIONAL' && !registroProfissional) {
+    if (role === "PROFISSIONAL" && !registroProfissional) {
       return res.status(400).json({
-        error: 'Profissionais precisam informar seu Registro Profissional.',
+        error: "Profissionais precisam informar seu Registro Profissional.",
       });
     }
 
@@ -23,7 +25,7 @@ async function cadastrarUsuario(req, res) {
     });
 
     return res.status(200).json({
-      mensagem: 'Usuário cadastrado com sucesso!',
+      mensagem: "Usuário cadastrado com sucesso!",
       usuario: novoUsuario,
     });
   } catch (error) {
@@ -34,4 +36,4 @@ async function cadastrarUsuario(req, res) {
 //TODO
 async function logarUsuario(req, res) {}
 
-export default { cadastrarUsuario };
+export default { cadastrarUsuario, logarUsuario };

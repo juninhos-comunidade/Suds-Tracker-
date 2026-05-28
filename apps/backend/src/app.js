@@ -1,17 +1,20 @@
 import express from "express";
 import cors from "cors";
+import usuariosRota from "./routes/usuariosRota.js";
 
-//iniciar backend
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-//permite conexao entre front e backend com portas diferentes
 app.use(cors());
-
-//converte texto bruto do json em objetos javascript
 app.use(express.json());
+app.use("/api/usuarios", usuariosRota);
 
-//log do server rodando
+// Middleware global de tratamento de erros
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Erro interno do servidor." });
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando com sucesso na porta ${PORT}`);
 });
