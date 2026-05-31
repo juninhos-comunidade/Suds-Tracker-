@@ -5,6 +5,6 @@
   "main": "index.js",
   "private":"true",
   "scripts": {
-    "comeceteste": "npm --prefix apps/backend run dev & npm --prefix apps/frontend run dev"
+    "dev": "npm --prefix apps/backend run dev & npm --prefix apps/frontend run dev"
   }
 }
