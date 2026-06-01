@@ -70,7 +70,7 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 
    ```bash
    # Instalando dependências do Frontend
-   cd frontend
+   cd apps/frontend
    npm install
 
    # Voltando para a raiz e instalando dependências do Backend
@@ -80,7 +80,8 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
    ```
 
 4. Configure as variáveis de ambiente:
-   - Crie um arquivo `.env` na raiz do projeto seguindo o modelo do `.env.example`.
+   - Na pasta `backend`, crie um arquivo `.env` copiando o modelo do `.env.example` (ele conterá a porta, configs do banco, etc).
+   - Na pasta `frontend`, crie um arquivo chamado `.env.local` (onde ficarão as variáveis do Next.js, como `NEXT_PUBLIC_API_URL=http://localhost:5000`).
 
 5. Inicie o servidor de desenvolvimento:
 

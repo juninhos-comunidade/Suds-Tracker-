@@ -67,7 +67,9 @@ export default function AuthPage() {
     setCarregando(true);
 
     try {
-      const response = await fetch('/api/usuarios/cadastro', {
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+      const response = await fetch(`${API_URL}/usuarios/cadastro`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
