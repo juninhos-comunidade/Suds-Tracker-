@@ -3,12 +3,21 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+const user = process.env.DB_USER;
+const senha = process.env.DB_PASSWORD;
+const host = process.env.DB_HOST;
+const porta = process.env.DB_PORT;
+const banco = process.env.DB_NAME;
+
+const urlDinamica = `postgresql://${user}:${senha}@${host}:${porta}/${banco}?schema=public`;
+
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    url: urlDinamica
   },
 });
