@@ -1,7 +1,7 @@
-import { Request, Response } from 'express';
-import { autenticar } from '../services/authService.js';
+import { Autenticar } from '../services/authService.js';
+const autenticar = new Autenticar();
 
-const userRepository = new UserRepository();
+
 export class autenticacaoController{    
     async autenticarUsuario(req, res) {
       const {email, senha} = req.body;
@@ -12,11 +12,11 @@ export class autenticacaoController{
           .json({ error: "Email e Senha são obrigatórios." });
         }
 
-      const novoUsuario = await autenticar({email,senha});
+      const novoUsuario = await autenticar.usuarioEntrar({email,senha});
 
       return res.status(200).json({
         mensagem: "Usuário cadastrado com sucesso!",
-        usuario: novoUsuario,
+        novoUsuario,
       });
     }
 }
