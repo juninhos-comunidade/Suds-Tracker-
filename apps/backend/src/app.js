@@ -2,7 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import usuariosRota from "./routes/usuariosRota.js";
-
+import authRotas from "./routes/authRotas.js"
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -14,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/usuarios", usuariosRota);
+app.use("/api/usuarios", authRotas);
 
 // Middleware global de tratamento de erros
 app.use((err, req, res, next) => {
