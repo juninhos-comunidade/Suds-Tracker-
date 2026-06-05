@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import usuariosRota from "./routes/usuariosRota.js";
-import authRotas from "./routes/authRotas.js"
+import usuariosRota from "./routes/cadastroUsuarioRota.js";
+import authRotas from "./routes/autenticacaoUsuarioRota.js"
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -13,8 +13,8 @@ app.use(cors());
 //converte texto bruto do json em objetos javascript
 app.use(express.json());
 
-app.use("/api/usuarios", usuariosRota);
-app.use("/api/auth", authRotas);
+app.use("/api/usuarios", cadastroUsuarioRota);
+app.use("/api/usuarios", autenticacaoUsuarioRota);
 
 // Middleware global de tratamento de erros
 app.use((err, req, res, next) => {

@@ -1,4 +1,4 @@
-import { Autenticar } from '../services/authService.js';
+import { Autenticar } from '../services/autenticacaoUsuarioService.js';
 const autenticar = new Autenticar();
 
 
