@@ -1,8 +1,8 @@
 import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
-import usuariosRota from "./routes/cadastroUsuarioRota.js";
-import authRotas from "./routes/autenticacaoUsuarioRota.js"
+import cadastroUsuarioRota from "./routes/cadastroUsuarioRota.js";
+import autenticacaoUsuarioRota from "./routes/autenticacaoUsuarioRota.js"
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5001;

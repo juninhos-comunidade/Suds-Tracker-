@@ -1,7 +1,8 @@
 import { parseISO, isValid, isFuture } from "date-fns";
+import UserRepository from "../repositories/userRepository.js";
 
 async function cadastrarUsuario(dadosUsuario) {
-  const { nome, senha, dataNascimento, registroProfissional } = dadosUsuario;
+  const { nome, email, senha, dataNascimento, registroProfissional, tipoUsuario } = dadosUsuario;
 
   // Usa await, pois vai realizar consulta no banco de dados e a operação deve ser async
   await validaUsuario(dadosUsuario);
@@ -9,11 +10,12 @@ async function cadastrarUsuario(dadosUsuario) {
   // TODO: Criptografar a senha (usando bcrypt, por exemplo) antes de salvar
   const senhaCriptografada = senha;
 
-  // Preparando para o Prisma (O Prisma usa prisma.MODELO.create e a chave 'data')
-  const novoUsuario = await prisma.usuario.create({
+  const emailFormatado = email ? String(email).trim().toLowerCase() : "";
+
+  const novoUsuario = await UserRepository.create({
     data: {
       nome,
-      email,
+      email: emailFormatado,
       senha: senhaCriptografada,
       dataNascimento: new Date(dataNascimento),
       registroProfissional,
@@ -26,19 +28,18 @@ async function cadastrarUsuario(dadosUsuario) {
 }
 
 async function validaUsuario(dadosUsuario) {
-  const { nome, senha, dataNascimento, registroProfissional } = dadosUsuario;
+  const { nome, email, senha, dataNascimento, registroProfissional, tipoUsuario } = dadosUsuario;
 
-
-  const emailPadrao = dadosUsuario.email ? Strin(dadosUsuario.email).trim().toLowerCase() : "";
+  const emailPadrao = email ? String(email).trim().toLowerCase() : "";
 
   if (!nome || String(nome).trim() === "") {
     throw new Error("Nome é obrigatório.");
   }
 
-  const emailValido = !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailPadrao);
 
-  if (!email || !emailValido) {
-    throw new Error("Email inválido ou não informado.");
+  if (!emailPadrao || !emailValido) {
+    throw new Error("Email inválido. Siga o formato: suds@tracker.com");
   }
 
   const senhaValida =
@@ -57,29 +58,22 @@ async function validaUsuario(dadosUsuario) {
   const dataNascimentoObjDate = parseISO(dataNascimento);
   if (
     !isValid(dataNascimentoObjDate) ||
-    isFuture(dataNascimentoObjDate || dataNascimentoObjDate)
+    isFuture(dataNascimentoObjDate)
   ) {
     throw new Error("Data de nascimento inválida.");
   }
 
-  if (tipoUsuario === "PROFISSIONAL" && !registroProfissional) {
-    throw new Error(
+if (tipoUsuario?.toUpperCase() === "PROFISSIONAL" && !registroProfissional) {
+      throw new Error(
       "Profissionais precisam informar seu Registro Profissional.",
     );
   }
 
-  // Preparando para o Prisma (O Prisma usa findUnique) - Movido para dentro da função!
-  /* 
-  const validaUsuarioExistente = await prisma.usuario.findUnique({
-    where: {
-      email: email,
-    },
-  });
+  const validaUsuarioExistente = await UserRepository.findByEmail(emailPadrao);
 
   if (validaUsuarioExistente) {
     throw new Error('Já existe um usuário cadastrado com esse Email.');
   }
-  */
 }
 
 export default { cadastrarUsuario };
