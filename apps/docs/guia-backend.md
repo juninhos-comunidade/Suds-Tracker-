@@ -4,26 +4,37 @@
 
 ---
 
-## Configuração de Variáveis de Ambiente (.env)
+## Configuração de Variáveis de Ambiente (.env) e Banco de Dados
 
-Para rodar o backend localmente, siga estes passos:
+Para rodar o backend localmente com o banco de dados, siga estes passos:
 
-1. Copie o arquivo `.env.example` e renomeie para `.env` na pasta `apps/backend`.
-2. Preencha os valores necessários no `.env`. Exemplo:
-
+1. Certifique-se de que o Docker está rodando e inicie os containers a partir da raiz do projeto:
+   ```bash
+   docker-compose up -d
    ```
+2. Copie o arquivo `.env.example` da raiz do projeto para a pasta `apps/backend/`. Ele deve conter as variáveis do banco de dados, por exemplo:
+
+   ```env
    PORT=5000
-
-   # Pode colocar qualquer valor de porta entre 1 e 65535
-   # Outras variáveis podem ser adicionadas conforme necessário
+   DB_USER=your_db_user
+   DB_PASSWORD=your_db_password
+   DB_HOST=localhost
+   DB_PORT=5432
+   DB_NAME=your_db_name
+   DATABASE_URL="postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?schema=public"
    ```
 
-3. Instale as dependências do projeto:
-   ```
+3. Instale as dependências do projeto na pasta `apps/backend`:
+   ```bash
    npm install
    ```
-4. Inicie o servidor:
+4. Sincronize o banco de dados e gere o Prisma Client:
+   ```bash
+   npx prisma db push
+   npx prisma generate
    ```
+5. Inicie o servidor:
+   ```bash
    npm run dev
    ```
 
@@ -33,13 +44,18 @@ Para rodar o backend localmente, siga estes passos:
 
 - Node.js
 - Express.js
-- (Adicionar outras tecnologias conforme necessário)
+- Prisma (ORM)
+- PostgreSQL
+- Docker
 
 ## Estrutura Básica
 
 - **controllers/**: Funções que recebem requisições e retornam respostas.
 - **routes/**: Define os endpoints e associa aos controllers.
-- **services/**: Implementa regras de negócio e acesso a dados.
+- **services/**: Implementa regras de negócio e validações.
+- **repositories/**: Responsável pela comunicação direta com o banco de dados (usando o Prisma Client).
+- **config/**: Configurações do sistema, como instâncias de conexão de banco de dados (`database.js`).
+- **prisma/**: Contém o modelo estrutural das tabelas (`schema.prisma`).
 - **app.js**: Ponto de entrada da aplicação.
 
 ## Async Function (Função Assincrona)

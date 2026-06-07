@@ -55,6 +55,12 @@ export default function HomePage() {
       return;
     }
 
+    const tipoValido = ['paciente', 'profissional'];
+    if (!tipoValido.includes(tipoUsuario)) {
+      alert('Tipo de usuário inválido.');
+      return;
+    }
+
     if (tipoUsuario === 'profissional' && !registroProfissional) {
       alert('Por favor, informar seu CRM/CRP/Registro Profissional.');
       return;
@@ -63,40 +69,34 @@ export default function HomePage() {
     setCarregando(true);
 
     try {
-      // Simulando chamada à API (quando o backend estiver pronto)
-      // const response = await fetch('/api/auth/cadastro', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({
-      //     nome: nomeCadastro,
-      //     dataNascimento,
-      //     email: emailCadastro,
-      //     senha: senhaCadastro,
-      //     tipoUsuario,
-      //     registroProfissional: tipoUsuario === 'profissional' ? registroProfissional : null
-      //   })
-      // });
-
-      // Por enquanto, simulamos sucesso
-      console.log('Cadastro enviado:', {
-        nome: nomeCadastro,
-        dataNascimento,
-        email: emailCadastro,
-        tipoUsuario,
-        registroProfissional: tipoUsuario === 'profissional' ? registroProfissional : null
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+      const response = await fetch(`${API_URL}/usuarios/cadastro`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          nome: nomeCadastro,
+          dataNascimento,
+          email: emailCadastro,
+          senha: senhaCadastro,
+          tipoUsuario,
+          registroProfissional:
+            tipoUsuario === 'profissional' ? registroProfissional : null,
+        }),
       });
 
-      // Aguarda um breve momento para feedback visual
-      await new Promise(resolve => setTimeout(resolve, 500));
+      const data = await response.json();
 
-      alert('Conta criada com sucesso! Redirecionando...');
-      
-      // Redireciona para home (será criada depois)
+      if(!response.ok) {
+        throw new Error(data.message || data.error);
+      }
+
+      alert('Cadastro realizado com sucesso! Redirecionando...');
       router.push('/home');
 
     } catch (erro) {
       console.error('Erro ao cadastrar:', erro);
-      alert('Erro ao criar conta. Tente novamente.');
+      alert(erro.message)
     } finally {
       setCarregando(false);
     }

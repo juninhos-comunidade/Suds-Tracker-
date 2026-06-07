@@ -4,6 +4,33 @@
 
 ---
 
+## Configurações de Variaveis de Ambiente (.env.local)
+
+Para rodar o frontend localmente, siga estes passos:
+
+1. Copie o arquivo .env.example da raiz do projeto para a pasta apps/frontend/ e renomeie para .env.local. Ele deve conter as variáveis públicas necessárias para comunicação com o backend, por exemplo:
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000/api
+```
+
+2. Instale as dependências do projeto na pasta apps/frontend:
+
+```bash
+   npm install
+```
+
+3. Inicie o servidor de desenvolvimento do Next.js:
+
+```bash
+   npm run dev
+```
+
+4. Acesse a aplicação no navegador:
+
+```bash
+  http://localhost:3000
+```
 ## Tecnologias Utilizadas
 
 - Next.js
