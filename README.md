@@ -82,8 +82,20 @@ Ambas as dependências de Frontend e Backend serão instaladas
 
      ```
 6. Implemente as migrações no banco de dados:
+
     ```bash
-    npx prisma migrate deploy
+   #dev 
+   npx prisma migrate dev
+
+   # produção
+   npx prisma migrate deploy
+ 
+   O comando prisma migrate faz 3 coisas:
+
+   Cria migration (Prisma → SQL)
+   Executa no banco (Executa e atualiza SQL)
+   Roda generate (Gera o client do Prisma)
+
 
      ```
 7. Inicie o servidor de desenvolvimento:
