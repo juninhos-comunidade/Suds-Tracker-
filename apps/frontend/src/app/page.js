@@ -327,10 +327,8 @@ export default function AuthPage() {
                     modoEscuro={modoEscuro}
                   />
 
-                  <label htmlFor="dataNascimento" className={modoEscuro ? styles.labelDark : styles.labelLight}>
-                    Data de Nascimento
-                  </label>
                   <DatePickerField
+                    label="Data de Nascimento"
                     id="dataNascimento"
                     value={dataNascimento}
                     onChange={(data) => { setDataNascimento(data); limparErro('dataNascimento'); }}
