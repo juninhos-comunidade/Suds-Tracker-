@@ -3,7 +3,8 @@ import { useUser } from '@/app/context/UserContext';
 import styles from './Sidebar.module.css';
 
 export default function Sidebar({ currentTab = 'home', onTabChange = () => {} }) {
-  const { user, role } = useUser();
+  // CORRIGIDO: agora é 'tipoUsuario' em vez de 'role'
+  const { user, tipoUsuario } = useUser();
 
   // Renderizar avatar com iniciais
   const getInitials = () => {
@@ -32,7 +33,7 @@ export default function Sidebar({ currentTab = 'home', onTabChange = () => {} })
           <p className={styles.userEmail}>{userEmail}</p>
         </div>
 
-        {/* Menu de Navegação Exclusivo */}
+        {/* Menu de Navegação */}
         <nav className={styles.navMenu}>
           <ul>
             <li>
@@ -44,7 +45,8 @@ export default function Sidebar({ currentTab = 'home', onTabChange = () => {} })
               </button>
             </li>
             
-            {role === 'patient' && (
+            {/* CORRIGIDO: Agora valida como 'paciente' */}
+            {tipoUsuario === 'paciente' && (
               <li>
                 <button 
                   className={`${styles.navLink} ${currentTab === 'estatisticas' ? styles.active : ''}`}
@@ -55,7 +57,8 @@ export default function Sidebar({ currentTab = 'home', onTabChange = () => {} })
               </li>
             )}
 
-            {role === 'professional' && (
+            {/* CORRIGIDO: Agora valida como 'profissional' */}
+            {tipoUsuario === 'profissional' && (
               <li>
                 <button 
                   className={`${styles.navLink} ${currentTab === 'home' ? styles.active : ''}`}
@@ -77,7 +80,7 @@ export default function Sidebar({ currentTab = 'home', onTabChange = () => {} })
           </ul>
         </nav>
 
-        {/* Configurações permanece no rodapé da Sidebar */}
+       { /* Configurações */}
         <div className={styles.actionButtons}>
           <button 
             className={`${styles.navLink} ${currentTab === 'settings' ? styles.active : ''}`}
