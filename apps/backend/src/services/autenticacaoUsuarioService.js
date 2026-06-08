@@ -1,6 +1,4 @@
-import { UserRepository } from '../repositories/userRepository.js';
-
-const userRepository = new UserRepository();
+import UserRepository from '../repositories/userRepository.js';
 
 
 export class Autenticar{

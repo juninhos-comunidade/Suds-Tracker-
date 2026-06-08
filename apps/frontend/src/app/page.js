@@ -157,7 +157,9 @@ export default function AuthPage() {
     setCarregando(true);
 
     try {
-      const response = await fetch('/api/usuarios/cadastro', {
+      const API_URL =
+        process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001/api';
+      const response = await fetch(`${API_URL}/usuarios/cadastro`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -241,16 +243,13 @@ export default function AuthPage() {
       </div>
 
       {/* LADO DIREITO */}
-      <div
-        className={`${styles.ladoDireito} ${modoEscuro ? styles.dark : styles.light}`}
-      >
+      <div className={`${styles.ladoDireito} ${modoEscuro ? styles.dark : styles.light}`}>
+        
         <div className={styles.caixaFormulario}>
           {/* BOTÃO MODO ESCURO - TOGGLE */}
-          <div
-            className={`${styles.toggleSwitch} ${modoEscuro ? styles.switchDark : styles.switchLight}`}
-          >
-            <input
-              type="checkbox"
+          <div className={`${styles.toggleSwitch} ${modoEscuro ? styles.switchDark : styles.switchLight}`}>
+            <input 
+              type="checkbox" 
               className={styles.toggleInput}
               checked={modoEscuro}
               onChange={() => setModoEscuro(!modoEscuro)}

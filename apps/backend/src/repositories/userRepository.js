@@ -1,18 +1,27 @@
-import { prisma } from '../config/database.js';
+import prisma from '../config/database.js';
 
-
-export class UserRepository {
+class UserRepository {
     async findByEmail(email) {
-        return await prisma.user.findUnique({ where: { email } });
+        return await prisma.user.findUnique({ 
+            where: { email } 
+        });
     }
+    
     async findById(userID){
-        return await prisma.user.findUnique({where: { id: userID}});
+        return await prisma.user.findUnique({
+            where: { id: userID}
+        });
     }
 
-    async create(name, email) {
-        return await prisma.user.create({data: { name, email }});
+    async create(data) {
+        return await prisma.user.create(data);
     }
+    
     async deleteByID(userID){
-        return await prisma.user.delete({where: {id: userID}});
+        return await prisma.user.delete({
+            where: {id: userID}
+        });
+    }
 }
-}
+
+export default new UserRepository();

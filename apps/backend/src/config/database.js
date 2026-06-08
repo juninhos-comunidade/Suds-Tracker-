@@ -16,4 +16,5 @@ const adapter = new PrismaPg(pool);
 console.log("🔍 URL Gerada:", urlDinamica);
 
 const prisma = new PrismaClient({ adapter });
-export { prisma };
+
+export default prisma;

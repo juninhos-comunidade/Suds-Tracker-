@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/Status-Em%20Desenvolvimento-orange?style=for-the-badge" alt="Status" />
 </p>
 
----teste
+
 
 ## 📝 Sobre o Projeto
 
@@ -50,53 +50,60 @@ Antes de começar, você vai precisar ter instalado em sua máquina:
 - **Controle de Versão:** Git ...
 - **Gerenciador de Pacotes:** NPM (já vem instalado junto com o Node.js) ...
   **Banco de Dados:** PostgreSQL ...
+- **Docker: gerenciamento de contêineres**
 
 ### 🚀 Passos para Instalação
 
 1. Clone o repositório oficial dentro da organização Juninhos:
 
    ```bash
-   git clone [(https://github.com/juninhos-comunidade/Suds-Tracker-.git)](https://github.com/juninhos-comunidade/Suds-Tracker-.git)
+   git clone https://github.com/juninhos-comunidade/Suds-Tracker-.git
    ```
 
 2. Acesse a pasta do projeto:
 
    ```bash
-   cd suds-tracker
+   cd Suds-Tracker-
    ```
 
 3. Instale todas as dependências necessárias:
-   Você precisa instalar as dependências separadamente para o Frontend e para o Backend:
-
+Ambas as dependências de Frontend e Backend serão instaladas
    ```bash
-   # Instalando dependências do Frontend
-   cd frontend
+   # Instalando dependências do projeto
    npm install
-
-   # Voltando para a raiz e instalando dependências do Backend
-   cd ../backend
-   npm install
-
    ```
-
+   
 4. Configure as variáveis de ambiente:
    - Crie um arquivo `.env` na raiz do projeto seguindo o modelo do `.env.example`.
+   
+5. Inicialize o contêiner com o banco de dados (somente se estiver em desenvolvimento):
+    ```bash
+    docker compose up -d
 
-5. Inicie o servidor de desenvolvimento:
+     ```
+6. Implemente as migrações no banco de dados:
 
-Terminal 1: Iniciando o Frontend (Next.js) -> Rodará em http://localhost:3000
+    ```bash
+   #dev 
+   npx prisma migrate dev
 
-```
-cd frontend
-npm run dev
-```
+   # produção
+   npx prisma migrate deploy
+ 
+   O comando prisma migrate faz 3 coisas:
 
-Terminal 2: Iniciando o Backend (Express) -> Rodará em http://localhost:5000
+   Cria migration (Prisma → SQL)
+   Executa no banco (Executa e atualiza SQL)
+   Roda generate (Gera o client do Prisma)
 
-```
-cd backend
-npm run dev
-```
+
+     ```
+7. Inicie o servidor de desenvolvimento:
+    ```bash
+    npm run dev
+    ```
+Backend (Express) -> Rodará em http://localhost:5000
+Frontend (Next.js) -> Rodará em http://localhost:3000
 
 ---
 

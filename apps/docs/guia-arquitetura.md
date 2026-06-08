@@ -16,9 +16,12 @@ TODO
 
 ## Backend
 
-- **controllers/**: Lógica das requisições, manipula dados recebidos e enviados.
+- **controllers/**: Lógica das requisições, manipula dados recebidos e envia respostas.
 - **routes/**: Define as rotas/endpoints da API.
-- **services/**: Regras de negócio e integração com banco de dados.
+- **services/**: Regras de negócio, validações e orquestração de operações.
+- **repositories/**: Camada de acesso a dados (Data Access Layer), integra-se com o ORM (Prisma) para consultar ou alterar o banco.
+- **config/**: Configurações do projeto, como a inicialização do client do banco de dados.
+- **prisma/**: Arquivos do ORM, incluindo o arquivo `schema.prisma` com os modelos de banco de dados.
 - **app.js**: Inicialização do servidor e configuração principal.
 
 ## Frontend

@@ -1,19 +1,17 @@
-//import usuariosService from "../services/usuariosService.js";
+import usuariosService from "../services/cadastroUsuarioService.js";
 
 async function cadastrarUsuario(req, res) {
   try {
-    const { nome, email, senha, dataNascimento, registroProfissional, role } =
-      req.body;
-    if (!nome || !email || !senha) {
-      return res
-        .status(400)
-        .json({ error: "Nome, Email e Senha são obrigatórios." });
-    }
-    if (role === "PROFISSIONAL" && !registroProfissional) {
-      return res.status(400).json({
-        error: "Profissionais precisam informar seu Registro Profissional.",
-      });
-    }
+    const {
+      nome,
+      email,
+      senha,
+      dataNascimento,
+      registroProfissional,
+      tipoUsuario,
+    } = req.body;
+
+    console.log(req.body);
 
     const novoUsuario = await usuariosService.cadastrarUsuario({
       nome,
@@ -21,19 +19,19 @@ async function cadastrarUsuario(req, res) {
       senha,
       dataNascimento,
       registroProfissional,
-      role,
+      tipoUsuario,
     });
 
-    return res.status(200).json({
+    return res.status(201).json({
       mensagem: "Usuário cadastrado com sucesso!",
       usuario: novoUsuario,
     });
   } catch (error) {
-    return res.status(400).json({ error: error.mensagem });
+    console.error("Erro capturado no cadastro:", error);
+    return res
+      .status(400)
+      .json({ error: error.message || "Erro interno do servidor." });
   }
 }
 
-//TODO
-async function logarUsuario(req, res) {}
-
-export default { cadastrarUsuario, logarUsuario };
+export default { cadastrarUsuario };

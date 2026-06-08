@@ -7,7 +7,21 @@ generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
-
 datasource db {
   provider = "postgresql"
 }
+
+//Model Teste!
+
+model User {
+  id                   String   @id @default(uuid())
+  nome                 String
+  email                String   @unique
+  senha                String
+  dataNascimento       DateTime
+  registroProfissional String?
+  tipoUsuario          String?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}
+

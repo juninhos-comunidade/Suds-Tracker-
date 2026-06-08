@@ -1,0 +1,212 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  right: 0;
+  background: white;
+  border-bottom: 1px solid #eae6f0;
+  z-index: 999;
+  padding: 0;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.navbar {
+  width: 100%;
+  padding: 0 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Links na esquerda, utilitários na direita */
+}
+
+.leftNav {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0; /* Impede que o texto "Suporte" seja esmagado */
+}
+
+.navItem {
+  display: block;
+  text-decoration: none;
+  color: #615966;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap; /* Garante que o texto nunca quebre em duas linhas */
+}
+
+.navItem:hover {
+  color: #8b73f7;
+  border-bottom-color: #8b73f7;
+}
+
+/* Área de utilitários da direita */
+.rightNav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0;
+}
+
+/* Botão do Modo Escuro */
+.themeToggle {
+  background: #f5f3f8;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.themeToggle:hover {
+  background: #eae6f0;
+}
+
+/* Botão Sair */
+.btnTopLogout {
+  background: #fff0f1;
+  color: #f43f5e;
+  border: 1px solid #ffe4e6;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnTopLogout:hover {
+  background: #f43f5e;
+  color: #ffffff;
+  border-color: #f43f5e;
+}
+
+/*  INTERFACE DO MODAL DE LOGOUT */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(45, 41, 48, 0.4);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modalCard {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(45, 41, 48, 0.1);
+  animation: modalUp 0.25s ease-out;
+}
+
+.modalTitle {
+  color: #2d2930;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+}
+
+.modalText {
+  color: #8a828e;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 28px 0;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnCancel {
+  flex: 1;
+  background: #f3f0ff;
+  color: #8b73f7;
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btnCancel:hover {
+  background: #e8e3ff;
+}
+
+.btnConfirm {
+  flex: 1;
+  background: #ffffff;
+  color: #8a828e;
+  border: 1px solid #eae6f0;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnConfirm:hover {
+  background: #fff1f2;
+  color: #f43f5e;
+  border-color: #ffe4e6;
+}
+
+@keyframes modalUp {
+  from { transform: translateY(15px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/*  RESPONSIVIDADE CORRIGIDA (SEM SOBREPOSIÇÃO)  */
+@media (max-width: 1024px) {
+  .header { 
+    left: 280px; /* Mantém o recuo correto para não entrar debaixo da sidebar */
+  }
+  .navbar { 
+    padding: 0 30px 0 40px; /* Dá uma folga extra de segurança na esquerda */
+  }
+}
+
+@media (max-width: 768px) {
+  .header { 
+    left: 200px; /* Ajustado para quando a sua sidebar encolher para 200px */
+  }
+  .navbar { 
+    padding: 0 20px 0 30px; 
+  }
+  .navItem { 
+    font-size: 14px; 
+  }
+}
+
+@media (max-width: 480px) {
+  .header { 
+    left: 0; 
+    height: 60px; 
+  }
+  .navbar { 
+    padding: 0 16px; 
+  }
+  .navItem { 
+    font-size: 13px; 
+  }
+}
