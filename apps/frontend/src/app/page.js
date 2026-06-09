@@ -170,7 +170,6 @@ export default function AuthPage() {
         }),
       });
 
-      await new Promise((resolve) => setTimeout(resolve, 500));
 
       setSucessoCadastro('Conta criada com sucesso! Redirecionando...');
       setTimeout(() => router.push('/home'), 1500);
@@ -215,9 +214,6 @@ export default function AuthPage() {
       //     senha: senhaLogin
       //   })
       // });
-
-      // Aguarda um breve momento para feedback visual
-      await new Promise((resolve) => setTimeout(resolve, 500));
 
       setSucessoLogin('Login realizado! Redirecionando...');
       setTimeout(() => router.push('/home'), 1500);
