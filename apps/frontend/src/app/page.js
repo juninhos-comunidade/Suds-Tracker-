@@ -162,20 +162,29 @@ export default function AuthPage() {
         body: JSON.stringify({
           nome: nomeCadastro,
           dataNascimento,
-          email: emailCadastro,
+          email: emailCadastro.trim().toLowerCase(),
           senha: senhaCadastro,
           tipoUsuario,
           registroProfissional:
-            tipoUsuario === 'profissional' ? registroProfissional : null,
+            tipoUsuario === 'profissional' ? registroProfissional.trim() : null,
         }),
       });
 
+      const data = await response.json();
+
+      if (!response.ok) {
+        const mensagemErro = data?.message || data?.error || 'Erro ao criar conta. Tente novamente.';
+        setErroCadastro(mensagemErro);
+        return;
+      }
 
       setSucessoCadastro('Conta criada com sucesso! Redirecionando...');
       setTimeout(() => router.push('/home'), 1500);
     } catch (erro) {
       console.error('Erro ao cadastrar:', erro);
-      setErroCadastro('Erro ao criar conta. Tente novamente.');
+      setErroCadastro(
+        erro?.message || 'Erro ao criar conta. Tente novamente.',
+      );
     } finally {
       setCarregando(false);
     }
@@ -214,6 +223,13 @@ export default function AuthPage() {
       //     senha: senhaLogin
       //   })
       // });
+
+      const data = await response.json();
+      if(!response.ok) {
+        const mensagemErro = data?.message || data?.error || 'Erro ao criar conta. Tente novamente.';
+        setErroCadastro(mensagemErro)
+        return;
+      }
 
       setSucessoLogin('Login realizado! Redirecionando...');
       setTimeout(() => router.push('/home'), 1500);
