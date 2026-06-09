@@ -5,7 +5,7 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState('patient'); // 'patient' | 'professional'
+  const [tipoUsuario, setTipoUsuario] = useState('paciente'); // 'paciente' | 'profissional'
   const [loading, setLoading] = useState(true);
   const [showSudsModal, setShowSudsModal] = useState(false);
 
@@ -14,21 +14,20 @@ export function UserProvider({ children }) {
     const loadUserData = () => {
       if (typeof window !== 'undefined') {
         const storedUser = localStorage.getItem('suds_current_user');
-        const storedRole = localStorage.getItem('suds_role');
+        const storedTipoUsuario = localStorage.getItem('suds_tipo_usuario');
         const dontShowModal = localStorage.getItem('suds_modal_dont_show');
 
         if (storedUser) {
           const parsedUser = JSON.parse(storedUser);
           setUser(parsedUser);
-          setRole(storedRole || parsedUser.role || 'patient');
+          setTipoUsuario(storedTipoUsuario || parsedUser.tipoUsuario || 'paciente');
         } else {
           // Se não houver ninguém logado, define um visitante temporário para testes
-          const guestUser = { id: 'guest', nome: 'Visitante', role: 'patient' };
+          const guestUser = { id: 'guest', nome: 'Visitante', tipoUsuario: 'paciente' };
           setUser(guestUser);
-          setRole('patient');
+          setTipoUsuario('paciente');
         }
 
-     
         if (!dontShowModal) {
           setShowSudsModal(true);
         }
@@ -42,34 +41,35 @@ export function UserProvider({ children }) {
   const updateUser = (userData) => {
     setUser(userData);
     localStorage.setItem('suds_current_user', JSON.stringify(userData));
-    if (userData.role) {
-      setRole(userData.role);
-      localStorage.setItem('suds_role', userData.role);
+    if (userData.tipoUsuario) {
+      setTipoUsuario(userData.tipoUsuario);
+      localStorage.setItem('suds_tipo_usuario', userData.tipoUsuario);
     }
   };
 
-  const updateRole = (newRole) => {
-    setRole(newRole);
-    localStorage.setItem('suds_role', newRole);
+  const updateTipoUsuario = (newTipoUsuario) => {
+    setTipoUsuario(newTipoUsuario);
+    localStorage.setItem('suds_tipo_usuario', newTipoUsuario);
     
     if (user) {
-      const updatedUser = { ...user, role: newRole };
+      const updatedUser = { ...user, tipoUsuario: newTipoUsuario };
       setUser(updatedUser);
       localStorage.setItem('suds_current_user', JSON.stringify(updatedUser));
     }
   };
 
-  const fecharOModal = () => {
-    setShowSudsModal(false);
-    localStorage.setItem('suds_modal_dont_show', 'true');
-  };
+ 
+const fecharOModal = () => {
+  setShowSudsModal(false); 
+  
+};
 
   const logout = () => {
     setUser(null);
-    setRole('patient');
+    setTipoUsuario('paciente');
     setShowSudsModal(true);
-    localStorage.removeItem('suds_current_user'); // Só diz pro navegador esquecer o nome do usuário
-    localStorage.removeItem('suds_role'); // Só diz pro navegador esquecer se era paciente/psicólogo
+    localStorage.removeItem('suds_current_user'); // diz pro navegador esquecer o nome do usuário
+    localStorage.removeItem('suds_tipo_usuario'); // diz pro navegador esquecer se era paciente/profissional
     localStorage.removeItem('suds_modal_dont_show'); // Faz o modal de introdução voltar a aparecer no próximo login
     localStorage.removeItem('suds_auth_token'); // Joga fora a chave de acesso do usuário (mesmo que seja só um token de teste por enquanto)
   };
@@ -78,11 +78,11 @@ export function UserProvider({ children }) {
     <UserContext.Provider
       value={{
         user,
-        role,
+        tipoUsuario,
         loading,
         showSudsModal,
         updateUser,
-        updateRole,
+        updateTipoUsuario,
         fecharOModal,
         logout,
       }}

@@ -3,7 +3,6 @@
  * Gerencia a sessão local e prepara os caminhos para o Back-end.
  */
 
-
 /**
  * Salva o token de autenticação no navegador do usuário.
  */
@@ -30,6 +29,7 @@ export function removeToken() {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('suds_auth_token');
     localStorage.removeItem('suds_current_user');
+    localStorage.removeItem('suds_tipo_usuario'); 
   }
 }
 
@@ -40,14 +40,12 @@ export function isAuthenticated() {
   return !!getToken();
 }
 
-
-
 // O Back-end vai substituir o conteúdo abaixo por um 'fetch(/api/login)'
 export async function loginUser(email, password) {
- // Simulação de resposta de sucesso temporária
+  // Simulação de resposta de sucesso temporária ajustada para o novo padrão pt-BR
   return { 
     token: 'token_temporario_de_teste', 
-    user: { id: 'visitante_id', nome: 'Visitante', email, role: 'patient' } 
+    user: { id: 'visitante_id', nome: 'Visitante', email, tipoUsuario: 'paciente' } 
   };
 }
 
@@ -58,8 +56,6 @@ export async function createUser(userData) {
     ...userData 
   };
 }
-
-
 
 export async function saveSudsRecord(recordData) { return recordData; }
 export async function getSudsRecords() { return []; }

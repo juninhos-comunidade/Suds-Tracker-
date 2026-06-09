@@ -8,10 +8,12 @@ export default function SudsModal({ onClose, onSaibaMais }) {
   const [imageError, setImageError] = useState(false);
 
   const handleAcaoFinal = (tipo) => {
-    if (dontShowAgain && typeof window !== 'undefined') {
-      localStorage.setItem('suds_intro_seen', 'true');
+    // 1. CORRIGIDO: Agora usa a chave certa 'suds_modal_dont_show'
+    // E só salva SE o usuário marcou a caixinha 'Não mostrar essa apresentação ao entrar'
+    if (typeof window !== 'undefined' && dontShowAgain) {
+      localStorage.setItem('suds_modal_dont_show', 'true');
     }
-    
+
     if (tipo === 'saiba_mais' && onSaibaMais) {
       onSaibaMais();
     } else if (onClose) {
@@ -27,7 +29,6 @@ export default function SudsModal({ onClose, onSaibaMais }) {
         </button>
 
         <div className={styles.header}>
-          {/* Container Interativo */}
           <div className={styles.avatarContainer}>
             {!imageError ? (
               <Image 
@@ -37,7 +38,7 @@ export default function SudsModal({ onClose, onSaibaMais }) {
                 height={75}           
                 className={styles.avatarImage} 
                 onError={() => setImageError(true)}
-                />
+              />
             ) : (
               <span className={styles.avatarEmoji}>👩‍⚕️✨</span>
             )}

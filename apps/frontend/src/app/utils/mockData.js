@@ -56,6 +56,6 @@ export const MOCK_STATISTICS = {
 };
 
 // Mantido estático apenas para evitar erros de importação caso alguma tela chame
-export function getMockUserByRole(role) {
-  return { id: 'test_id', nome: 'Usuário de Teste', role: role || 'patient' };
+export function getMockUserByRole(tipoUsuario) {
+  return { id: 'test_id', nome: 'Usuário de Teste', tipoUsuario: tipoUsuario || 'paciente' };
 }
