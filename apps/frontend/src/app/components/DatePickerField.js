@@ -1,5 +1,6 @@
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { ptBR } from 'date-fns/locale';
+import { format, parse } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import inputStyles from './InputField.module.css';
 import datePickerStyles from './DatePickerCustom.module.css';
@@ -7,6 +8,8 @@ import datePickerStyles from './DatePickerCustom.module.css';
 registerLocale('pt-BR', ptBR);
 
 export default function DatePickerField({ label, id, value, onChange, erro, modoEscuro = false }) {
+  const dataFormatada = value ? parse(value, 'dd/MM/yyyy', new Date()) : null;
+
   return (
     <div className={`${inputStyles.grupoInput} ${datePickerStyles.datePickerWrapper}`}>
       <label
@@ -18,8 +21,8 @@ export default function DatePickerField({ label, id, value, onChange, erro, modo
       <div className={modoEscuro ? datePickerStyles.datePickerWrapper : datePickerStyles.datePickerWrapperLight}>
         <DatePicker
           id={id}
-          selected={value ? new Date(value) : null}
-          onChange={(data) => onChange(data ? data.toISOString().split('T')[0] : '')}
+          selected={dataFormatada && !isNaN(dataFormatada) ? dataFormatada : null}
+          onChange={(data) => onChange(data ? format(data, 'dd/MM/yyyy') : '')}
           dateFormat="dd/MM/yyyy"
           locale="pt-BR"
           showMonthDropdown
