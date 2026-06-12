@@ -1,4 +1,4 @@
-import { parseISO, isValid, isFuture } from "date-fns";
+import { parse, isValid, isFuture } from "date-fns";
 import UserRepository from "../repositories/userRepository.js";
 
 async function cadastrarUsuario(dadosUsuario) {
@@ -16,7 +16,7 @@ async function cadastrarUsuario(dadosUsuario) {
       nome,
       email: emailFormatado,
       senha: senhaCriptografada,
-      dataNascimento: new Date(dataNascimento),
+      dataNascimento: dataNascimentoObjDate,
       registroProfissional,
       tipoUsuario,
     },
@@ -39,11 +39,8 @@ async function validaUsuario(dadosUsuario) {
     throw new Error("Data de nascimento é obrigatória.");
   }
 
-  const dataNascimentoObjDate = parseISO(dataNascimento);
-  if (
-    !isValid(dataNascimentoObjDate) ||
-    isFuture(dataNascimentoObjDate)
-  ) {
+  const dataNascimentoObjDate = parse(dataNascimento, "dd/MM/yyyy", new Date());
+  if (!isValid(dataNascimentoObjDate) || isFuture(dataNascimentoObjDate)) {
     throw new Error("Data de nascimento inválida.");
   }
 
