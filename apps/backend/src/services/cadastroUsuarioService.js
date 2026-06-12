@@ -4,7 +4,7 @@ import UserRepository from "../repositories/userRepository.js";
 async function cadastrarUsuario(dadosUsuario) {
   const { nome, email, senha, dataNascimento, registroProfissional, tipoUsuario } = dadosUsuario;
 
-  await validaUsuario(dadosUsuario);
+  const dataNascimentoObjDate = await validaUsuario(dadosUsuario);
 
   // TODO: Criptografar a senha (usando bcrypt, por exemplo) antes de salvar
   const senhaCriptografada = senha;
@@ -76,6 +76,8 @@ async function validaUsuario(dadosUsuario) {
   if (validaUsuarioExistente) {
     throw new Error('Já existe um usuário cadastrado com esse Email.');
   }
+
+  return dataNascimentoObjDate;
 }
 
 export default { cadastrarUsuario };
