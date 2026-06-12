@@ -1,4 +1,4 @@
-import { parse, isValid, isFuture } from "date-fns";
+import { parse, isValid, isFuture, differenceInYears } from "date-fns";
 import UserRepository from "../repositories/userRepository.js";
 
 async function cadastrarUsuario(dadosUsuario) {
@@ -42,6 +42,14 @@ async function validaUsuario(dadosUsuario) {
   const dataNascimentoObjDate = parse(dataNascimento, "dd/MM/yyyy", new Date());
   if (!isValid(dataNascimentoObjDate) || isFuture(dataNascimentoObjDate)) {
     throw new Error("Data de nascimento inválida.");
+  }
+
+  const dataHoje = new Date();
+  const idade = differenceInYears(dataHoje, dataNascimentoObjDate);
+
+  if (idade < 18) {
+    console.log(idade)
+    throw new Error("Data de nascimento inválida. Usuário precisa ter 18 ou mais anos de idade");
   }
 
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailPadrao);
